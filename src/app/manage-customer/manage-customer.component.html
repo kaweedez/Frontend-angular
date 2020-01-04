@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row">
+    <div class="col col-6">
+      <form #frmCustomers="ngForm" ref-frm>
+        <div class="form-group">
+          <label>Customer ID</label>
+          <input #abc="ngModel" name="txtId" #txtId [(ngModel)]="customer.id" class="form-control" placeholder="Enter customer id here"
+                 required="true" type="text" pattern="C\d+">
+          <div class="invalid" *ngIf="abc.invalid && abc.dirty">Invalid customer id</div>
+        </div>
+        <div class="form-group">
+          <label>Customer Name</label>
+          <input name="txtName" [(ngModel)]="customer.name" class="form-control" placeholder="Enter customer name here" required="true"
+                 type="text">
+        </div>
+        <div class="form-group">
+          <label>Customer Address</label>
+          <input name="txtAddress" [(ngModel)]="customer.address" class="form-control" placeholder="Enter customer address here"
+                 required="true" type="text">
+        </div>
+        <div class="form-group">
+          <button (click)="saveCustomer();frm.reset();open(content)" [disabled]="frmCustomers.invalid" class="btn btn-primary" type="button">Save
+            Customer
+          </button>
+          <button (click)="clear()" class="btn btn-warning" type="button">Clear</button>
+        </div>
+      </form>
+    </div>
+    <div class="col col-6">
+      <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr (click)="selectCustomer(c)"
+            *ngFor="let c of customers" @fade [class.selected]="selectedCustomer == c"
+            [style.color]="(selectedCustomer==c)?'white':'black'"
+        >
+          <td>{{c.id}}</td>
+          <td>{{c.name}}</td>
+          <td>{{c.address}}</td>
+          <td><i (click)="deleteCustomer(c)" class="fas fa-trash"></i></td>
+        </tr>
+        </tbody>
+        <tfoot *ngIf="customers.length==0">
+        <tr>
+          <td colspan="4">No customers!</td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <h1>Customer Saved Successfully</h1>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>

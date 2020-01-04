@@ -1,0 +1,39 @@
+<h2>This is my new interface</h2>
+<h3>{{10 + 20}}</h3>
+<h1>{{name}}</h1>
+<!--<ul>-->
+<!--  <li *ngFor="let c of colors; let i = index">{{i + '.' +  c}}</li>-->
+<!--</ul>-->
+<table class="table table-hover table-borderd">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Address</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let c of customers">
+    <td>{{c.id}}</td>
+    <td>{{c.name}}</td>
+    <td>{{c.address}}</td>
+    <td><i class="fas fa-trash"></i></td>
+  </tr>
+  </tbody>
+
+
+</table>
+
+<hr>
+<div class="form-group">
+  <label>Enter something here</label>
+  <input [value]="something" (input)="something=$any($event.target).value" class="form-control" type="text">
+</div>
+<hr>
+<div>Output</div>
+<div>{{something}}</div>
+<br>
+<br>
+<br>
+<br>
+<br>

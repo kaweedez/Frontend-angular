@@ -1,0 +1,46 @@
+.container {
+  margin-top: 10px;
+}
+
+table {
+
+  tbody {
+
+    tr{
+      cursor: pointer;
+    }
+
+    tr td:last-child {
+      text-align: center;
+
+      i {
+        font-size: 22px;
+
+        &:hover {
+          color: red;
+        }
+      }
+    }
+  }
+
+  tfoot{
+    tr{
+      text-align: center;
+    }
+  }
+}
+
+button{
+  margin-right: 10px;
+}
+
+.selected{
+  background-color: lightblue;
+}
+
+.invalid{
+  margin-top: 10px;
+  font-size: 10px;
+  color: red;
+}
+
