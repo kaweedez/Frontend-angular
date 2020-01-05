@@ -3,6 +3,7 @@ import {Customer} from '../dto/customer';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CustomerService} from '../service/customer.service';
+import {dashCaseToCamelCase} from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-manage-customer',
@@ -28,6 +29,7 @@ export class ManageCustomerComponent implements OnInit, AfterViewInit {
 
   customers: Array<Customer> = [];
   customer: Customer = new Customer('', '', '');
+  txtSearch = '';
   update = false;
   @ViewChild('txtId', {static: false})
   txtId: ElementRef;
@@ -42,7 +44,11 @@ export class ManageCustomerComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
+    this.customerService.getAllCustomers().subscribe(value => {
+      this.customers = value;
+    }, error => {
+      console.log(error);
+    });
   }
 
   ngAfterViewInit(): void {
@@ -58,13 +64,13 @@ export class ManageCustomerComponent implements OnInit, AfterViewInit {
         console.log(error);
       });
     } else {
-      /*      for (const c of this.customers) {
-              if (c.id === this.customer.id){
-                c.name = this.customer.name;
-                c.address = this.customer.address;
-                break;
-              }
-            }*/
+
+      this.customerService.updateCustomer(this.customer).subscribe(id => {
+        alert(id);
+      }, error1 => {
+        console.log(error1);
+      });
+
       const c = this.customers.find(c => {
         return c.id == this.customer.id;
       });
@@ -86,10 +92,22 @@ export class ManageCustomerComponent implements OnInit, AfterViewInit {
     this.customer = new Customer(customer.id, customer.name, customer.address);
   }
 
+  // updateCustomer(customer: Customer): void {
+  //   this.customers.push(this.customer);
+  //   this.customerService.updateCustomer(this.customer).subscribe(id => {
+  //     alert(id);
+  //   }, error1 => {
+  //     console.log(error1);
+  //   });
+  // }
+
   deleteCustomer(customer: Customer): void {
     if (confirm('Are you sure to delete this customer?')) {
       const index = this.customers.indexOf(customer);
       this.customers.splice(index, 1);
+      this.customerService.deleteCustomer(customer.id).subscribe(data => {
+        this.customerService.getAllCustomers();
+      });
     }
     this.selectedCustomer = null;
   }
@@ -98,6 +116,25 @@ export class ManageCustomerComponent implements OnInit, AfterViewInit {
     this.update = false;
     this.customer = new Customer('', '', '');
     this.selectedCustomer = null;
+  }
+
+  search(txtSearch): void {
+
+    if (txtSearch === '') {
+      this.customerService.getAllCustomers().subscribe(value => {
+        this.customers = value;
+      }, error => {
+        console.log(error);
+      });
+    } else {
+
+      this.customerService.getCustomer(txtSearch).subscribe(data => {
+        this.customers = [];
+        this.customers.push(data);
+      }, error => {
+        console.log(error);
+      });
+    }
   }
 
 }

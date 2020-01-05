@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Customer} from "../../dto/customer";
-import {CustomerService} from "../../service/customer.service";
+import {Customer} from '../../dto/customer';
+import {CustomerService} from '../../service/customer.service';
 
 @Component({
   selector: 'app-test',
@@ -19,7 +19,7 @@ export class TestComponent implements OnInit {
   ngOnInit() {
     this.customerService.getAllCustomers().subscribe(value => {
       this.customers = value;
-    },error => {
+    }, error => {
       console.log(error);
     });
   }

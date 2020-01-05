@@ -15,4 +15,17 @@ export class CustomerService {
   saveCustomer(customer: Customer): Observable<string> {
     return this.http.post<string>('http://localhost:8080/api/v1/customers', customer);
   }
+
+  deleteCustomer(id: string): Observable<string> {
+        const url = 'http://localhost:8080/api/v1/customers/' + id;
+        return this.http.delete<string>(url);
+    }
+
+  updateCustomer(customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>('http://localhost:8080/api/v1/customers/' + customer.id, customer);
+  }
+
+  getCustomer(id: string): Observable<Customer> {
+    return this.http.get<Customer>('http://localhost:8080/api/v1/customers/' + id);
+  }
 }

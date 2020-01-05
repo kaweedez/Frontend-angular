@@ -27,6 +27,13 @@
       </form>
     </div>
     <div class="col col-6">
+        <div class="form-group">
+            <input name="txtSearch" [(ngModel)]="txtSearch" class="form-control" placeholder="Search here" required="true" type="text">
+        </div>
+        <div class="form-group">
+            <button (click)="search(txtSearch)" class="btn btn-warning" type="button">Search</button>
+
+        </div>
       <table class="table table-hover table-bordered">
         <thead>
         <tr>
@@ -39,8 +46,7 @@
         <tbody>
         <tr (click)="selectCustomer(c)"
             *ngFor="let c of customers" @fade [class.selected]="selectedCustomer == c"
-            [style.color]="(selectedCustomer==c)?'white':'black'"
-        >
+            [style.color]="(selectedCustomer==c)?'white':'black'">
           <td>{{c.id}}</td>
           <td>{{c.name}}</td>
           <td>{{c.address}}</td>
